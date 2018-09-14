@@ -20,9 +20,30 @@ pipeline {
             }
             post {
                 success {
-                    echo 'All tests were passed.. Image has been Built'
+                    echo 'All tests were passed..'
+					input message:'Approve deployment?'
                 }
             }
         }
+		stage("Deploy") {
+			stages {
+               stage("Compose-Build Stage") {
+                   steps {
+                       sh 'docker-compose build'
+                   }
+               }
+               stage("Spining out Containers") {
+                   steps {
+                       sh 'docker-compose up -d'
+                   }
+               }
+            }
+            post {
+                success {
+                    echo 'Here you go !! all containers are running fine... '
+                }
+            }
+		
+		}
     }
 }
