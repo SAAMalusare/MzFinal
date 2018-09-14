@@ -1,19 +1,6 @@
 pipeline {
     agent none
-		
-	stages {
-		stage("Cleanup Workspace") {
-            agent { label 'master' } 
-            stages {
-               stage("Clean") {
-                   steps {
-                       deleteDir()
-                   }
-               }
-            }
-        }
-	}
-	
+
 	stages {	
         stage("Compile Build and Test") {
             agent {
