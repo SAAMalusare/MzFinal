@@ -1,15 +1,18 @@
 pipeline {
     agent none
-
-    
-	stages("Cleanup Workspace") {
-			 agent { label 'master' } 
-			 stage {
-						deleteDir()
-					}
-		}
 		
 	stages {
+		stage("Cleanup Workspace") {
+            agent { label 'master' } 
+            stages {
+               stage("") {
+                   steps {
+                       deleteDir()
+                   }
+               }
+            }
+        }
+		
         stage("Compile Build and Test") {
             agent {
                 docker { image 'composer:1.6.5' }
