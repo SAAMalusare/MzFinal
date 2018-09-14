@@ -15,13 +15,13 @@ pipeline {
                stage("Test") {
                    steps {
                        sh 'vendor/bin/phpunit -c tests/unit/phpunit.xml tests/unit'
+					   input(message: 'Approve deployment?')
                    }
                }
             }
             post {
                 success {
                     echo 'All tests were passed..'
-					input message:'Approve deployment?'
                 }
             }
         }
