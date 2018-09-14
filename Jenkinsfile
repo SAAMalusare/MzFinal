@@ -18,14 +18,16 @@ pipeline {
 					   
                    }
                }
+			   stage("Deployment Confirmation required") {
+                   steps {
+							echo 'All tests were passed.. shall I proceed with deployment :)'
+							input message:'Proceed with Deployment?'
+					   
+                   }
+               }
             }
         }
-		stage("Deployment Confirmation required") {
-			 agent { label 'master' } 
-			 stages {
-						stage("D") {  steps {input message:'Proceed with Deployment?'}}
-					}
-		}
+
 		stage("Deploy") {
 			agent { label 'master' } 
 			stages {
