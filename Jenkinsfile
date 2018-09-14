@@ -1,7 +1,13 @@
 pipeline {
     agent none
 
-    stages {
+    stage("Cleanup Workspace") {
+			 agent { label 'master' } 
+			 stages {
+						deleteDir()
+					}
+		}
+	stages {
         stage("Compile Build and Test") {
             agent {
                 docker { image 'composer:1.6.5' }
@@ -23,12 +29,8 @@ pipeline {
 		stage("Deployment Confirmation required") {
 			 agent { label 'master' } 
 			 stages {
-               stage("Compose-Build Stage") {
-                   steps {
-                       input message:'Proceed with Deployment?'
-                   }
-               }
-            }
+						input message:'Proceed with Deployment?'
+					}
 		}
 		stage("Deploy") {
 			agent { label 'master' } 
