@@ -34,7 +34,7 @@ pipeline {
 		stage("Deployment Confirmation required") {
 			 agent { label 'master' } 
 			 stages {
-						input message:'Proceed with Deployment?'
+						stage(" ") {  steps {input message:'Proceed with Deployment?'}}
 					}
 		}
 		stage("Deploy") {
