@@ -11,15 +11,13 @@ services:
     links:
       - php
       - service-stock-mysql
-  
+
   php:
-    build:./docker/php
-      
+    build: .
     container_name: service-stock-php
     working_dir: /var/www
     volumes:
       - .:/var/www
-    
   service-stock-mysql:
     image: mysql:5.7
 

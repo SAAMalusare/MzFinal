@@ -26,6 +26,7 @@ pipeline {
             }
         }
 		stage("Deploy") {
+			agent { label 'master' } 
 			stages {
                stage("Compose-Build Stage") {
                    steps {
