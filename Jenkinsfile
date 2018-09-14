@@ -34,7 +34,8 @@ pipeline {
 				
                stage("Compose-Build Stage") {
                    steps {
-                       sh 'docker-compose build'
+                       sh 'rm -rf ./db'
+					   sh 'docker-compose build'
                    }
                }
                stage("Spining out Containers") {
