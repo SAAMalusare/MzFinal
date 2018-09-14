@@ -1,0 +1,29 @@
+version: '2'
+services:
+
+  web:
+    image: nginx
+    ports:
+      - "8080:80"
+
+    links:
+      - php
+      - mysql
+    volumes:
+      - ./sites:/etc/nginx/conf.d
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+
+  php:
+    build: .
+    working_dir: /var/www
+    volumes:
+      - ./public:/var/www
+
+  mysql:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
