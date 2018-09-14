@@ -15,19 +15,25 @@ pipeline {
                stage("Test") {
                    steps {
                        sh 'vendor/bin/phpunit -c tests/unit/phpunit.xml tests/unit'
-					   input(message: 'Approve deployment?')
+					   
                    }
                }
             }
-            post {
-                success {
-                    echo 'All tests were passed..'
-                }
-            }
         }
+		stage("Deployment Confirmation required") {
+			 agent { label 'master' } 
+			 stages {
+               stage("Compose-Build Stage") {
+                   steps {
+                       input message:'Proceed with Deployment?'
+                   }
+               }
+            }
+		}
 		stage("Deploy") {
 			agent { label 'master' } 
 			stages {
+				
                stage("Compose-Build Stage") {
                    steps {
                        sh 'docker-compose build'
